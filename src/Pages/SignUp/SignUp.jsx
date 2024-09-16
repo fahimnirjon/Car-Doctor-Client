@@ -75,7 +75,7 @@ const SignUp = () => {
                   />
                 </div>
                 <div className="form-control mt-3">
-                  <button className="btn btn-primary">Sign Up</button>
+                 <button className="btn btn-primary btn-block">Sign Up</button>
                 </div>
               </form>
               <p className="font-bold my-4 text-center">

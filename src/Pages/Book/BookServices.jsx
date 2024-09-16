@@ -2,27 +2,27 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import BookService from "./BookService";
 import Swal from "sweetalert2";
-import { json } from "react-router-dom";
 
 const BookServices = () => {
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
 
   const url = `http://localhost:5000/bookings?email=${user?.email}`;
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setBookings(data));
-  }, []);
 
-  const handleDelete = (id) => {
+  useEffect(()=>{
+    fetch(url)
+    .then(res=> res.json())
+    .then(data=> setBookings(data))
+  }, [])
+
+  const handleDelete = id => {
     const proceed = <span className="loading loading-spinner loading-lg"></span>
     if (proceed) {
       fetch(`http://localhost:5000/bookings/${id}`, {
         method: "DELETE",
       })
-        .then((res) => res.json())
-        .then((data) => {
+        .then(res => res.json())
+        .then(data => {
             console.log(data);
             if(data.deletedCount > 0){
                 Swal.fire({
@@ -33,7 +33,7 @@ const BookServices = () => {
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Yes, delete it!"
-                  }).then((result) => {
+                  }).then(result => {
                     if (result.isConfirmed) {
                       Swal.fire({
                         title: "Deleted!",

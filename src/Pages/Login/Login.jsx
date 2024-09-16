@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import img from '../../assets/images/login/login.svg'
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
 
   const { signIn } = useContext(AuthContext);
-
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location)
     
 
     const handleLogin = e =>{
@@ -14,12 +16,14 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password)
+        // console.log(email, password)
         
         signIn(email, password)
         .then(result=>{
-          const user = result.user;
-          console.log(result);
+          const loggedInUser = result.user;
+          console.log(loggedInUser);
+          navigate(location?.state ? location?.state : '/')
+          
         })
         .catch(error=> console.log(error))
     }
@@ -63,7 +67,7 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control mt-3">
-               <Link to='/'> <button className="btn btn-primary btn-block">Log in</button></Link>
+              <button className="btn btn-primary btn-block">Log in</button>
               </div>
             </form>
             <p className="font-bold my-4 text-center">New To Car Doctor? <Link className="text-orange-500 underline" to='/signup'>Sign Up</Link></p>
